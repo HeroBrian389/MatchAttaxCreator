@@ -465,6 +465,13 @@ const drawCard = async ({
   ctx.fillText(positionLabel, CARD_WIDTH / 2, footerY + FOOTER_HEIGHT / 2);
 };
 
+/**
+ * Renders the Match Attax card generator UI with live preview and export.
+ *
+ * Provides controls to edit player name, position, attack/defence values, six stat entries, background and logo imagery, and primary/secondary colours. Keeps a live canvas preview in sync with state, preloads uploaded images, and exports a framed PNG of the composed card via the download action.
+ *
+ * @returns The Home React element containing the configuration form, preview canvas, and download/export behavior.
+ */
 export default function Home() {
   const [playerName, setPlayerName] = useState("Star Striker");
   const [position, setPosition] = useState("Defender");
