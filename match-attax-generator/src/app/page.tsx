@@ -613,9 +613,9 @@ export default function Home() {
       const resolvedLogoImage =
         logoImageElement ?? (logoImage ? await loadImage(logoImage) : null);
 
-      // Render the card to COVER the 1080x1350 frame (fill width, crop height)
+      // Render the card to CONTAIN within the 1080x1350 frame (preserve full height)
       const cardCanvas = document.createElement("canvas");
-      const scaleToCover = Math.max(
+      const scaleToCover = Math.min(
         wrapperWidth / CARD_WIDTH,
         wrapperHeight / CARD_HEIGHT,
       );
@@ -648,7 +648,7 @@ export default function Home() {
       wctx.fillStyle = backgroundGradient;
       wctx.fillRect(0, 0, wrapperWidth, wrapperHeight);
 
-      // Center the card; canvas will crop overflow
+      // Center the contained card; equal offsets keep it aligned within the frame
       const offsetX = Math.round((wrapperWidth - cardCanvas.width) / 2);
       const offsetY = Math.round((wrapperHeight - cardCanvas.height) / 2);
       wctx.drawImage(cardCanvas, offsetX, offsetY);
