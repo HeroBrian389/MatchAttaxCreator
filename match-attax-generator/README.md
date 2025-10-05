@@ -9,4 +9,4 @@ npm install
 npm run dev
 ```
 
-For contribution guidelines, tooling expectations, and licensing notes, see the root `README.md` and `../agents.md`.
+For contribution guidelines, tooling expectations, and licensing notes, see the root `README.md` and `../AGENTS.md`.

@@ -6,7 +6,7 @@ Interactive toolkit for designing custom Match Attax-inspired trading cards. The
 
 - `match-attax-generator/` – primary Next.js 15 App Router project (TypeScript + Tailwind).
 - `MatchAttax-Card-Creator/` – legacy material retained for reference; nothing from this folder ships.
-- `agents.md` – automation playbook for AI or scripted contributors.
+- `AGENTS.md` – automation playbook for AI or scripted contributors.
 
 ## Quick start
 
@@ -73,7 +73,7 @@ Run `npm run build` followed by `npm run start` to verify the production output 
 4. Run `npm run build` to ensure production mode succeeds.
 5. Open a PR with screenshots or GIFs for any UI change.
 
-For automation guidelines, read [`agents.md`](agents.md).
+For automation guidelines, read [`AGENTS.md`](AGENTS.md).
 
 ## License
 
