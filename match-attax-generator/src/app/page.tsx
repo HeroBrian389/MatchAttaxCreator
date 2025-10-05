@@ -603,8 +603,9 @@ export default function Home() {
     setIsDownloading(true);
     try {
       const wrapperCanvas = document.createElement("canvas");
-      const wrapperWidth = 1080;
       const wrapperHeight = 1350;
+      const exportScale = wrapperHeight / CARD_HEIGHT;
+      const wrapperWidth = Math.round(CARD_WIDTH * exportScale);
       wrapperCanvas.width = wrapperWidth;
       wrapperCanvas.height = wrapperHeight;
 
@@ -613,15 +614,12 @@ export default function Home() {
       const resolvedLogoImage =
         logoImageElement ?? (logoImage ? await loadImage(logoImage) : null);
 
-      // Render the card to CONTAIN within the 1080x1350 frame (preserve full height)
+      // Render the card scaled to the export height so the full design remains visible
       const cardCanvas = document.createElement("canvas");
-      const scaleToCover = Math.min(
-        wrapperWidth / CARD_WIDTH,
-        wrapperHeight / CARD_HEIGHT,
-      );
+      const scaleToContain = exportScale;
       await drawCard({
         canvas: cardCanvas,
-        scale: scaleToCover,
+        scale: scaleToContain,
         playerImage: resolvedPlayerImage,
         logoImage: resolvedLogoImage,
         data: {
@@ -639,7 +637,7 @@ export default function Home() {
       const wctx = wrapperCanvas.getContext("2d");
       if (!wctx) throw new Error("Failed to get 2D context for export");
 
-      // Background fill/gradient to 4:5 frame
+      // Background fill/gradient to match the resized export canvas
       wctx.fillStyle = "#020617";
       wctx.fillRect(0, 0, wrapperWidth, wrapperHeight);
       const backgroundGradient = wctx.createLinearGradient(0, 0, wrapperWidth, wrapperHeight);
@@ -648,10 +646,8 @@ export default function Home() {
       wctx.fillStyle = backgroundGradient;
       wctx.fillRect(0, 0, wrapperWidth, wrapperHeight);
 
-      // Center the contained card; equal offsets keep it aligned within the frame
-      const offsetX = Math.round((wrapperWidth - cardCanvas.width) / 2);
-      const offsetY = Math.round((wrapperHeight - cardCanvas.height) / 2);
-      wctx.drawImage(cardCanvas, offsetX, offsetY);
+      // Draw the card flush to the edges – no horizontal or vertical letterboxing
+      wctx.drawImage(cardCanvas, 0, 0);
 
       const dataUrl = wrapperCanvas.toDataURL("image/png");
       const link = document.createElement("a");
